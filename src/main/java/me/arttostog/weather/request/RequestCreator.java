@@ -1,0 +1,26 @@
+package me.arttostog.weather.request;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import java.io.IOException;
+import java.util.Objects;
+
+public class RequestCreator {
+	public static String Create(String url) throws IOException {
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().url(url).build();
+		try (Response response = client.newCall(request).execute()) {
+			return Objects.requireNonNull(response.body()).string();
+		}
+	}
+
+	public static int CreateTest(String url) throws IOException {
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder().url(url).build();
+		try (Response response = client.newCall(request).execute()) {
+			return response.code();
+		}
+	}
+}
