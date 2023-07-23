@@ -7,11 +7,11 @@
 
 ## Информация
 
-`Weather` - это простое приложение написанное на java для просмотра погоды.
+Weather - это простое приложение написанное на java для просмотра погоды.
 
-Приложение построено на фреймворке [JavaFX](https://openjfx.io/) и сервисе [openweathermap](https://openweathermap.org/).
+Приложение построено на фреймворке [JavaFX](https://openjfx.io/) и сервисе [OpenWeatherMap](https://openweathermap.org/).
 
-Внимание! Для работы, приложению нужен ваш API-Ключ от сервиса [openweathermap](https://home.openweathermap.org/api_keys)
+Внимание! Для работы, приложению нужен ваш API-Ключ от сервиса [OpenWeatherMap](https://home.openweathermap.org/api_keys).
 
 ## Установка
 
