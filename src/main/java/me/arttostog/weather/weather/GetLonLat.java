@@ -13,9 +13,14 @@ public class GetLonLat {
 	public double Lat;
 
 	public GetLonLat(String City) throws IOException {
-		String response = RequestCreator.Create("https://api.openweathermap.org/geo/1.0/direct?q=" + City + "&limit=1&appid=" + WeatherApplication.user.Token);
+		String url = new StringBuilder("https://api.openweathermap.org/geo/1.0/direct?q=")
+				.append(City)
+				.append("&limit=1&appid=")
+				.append(WeatherApplication.user.APIKey())
+				.toString();
+		String response = new RequestCreator(url).Create();
 
-		JsonObject jsonObject = JsonParser.parseString(response.replace("[", "").replace("]", "")).getAsJsonObject();
+		JsonObject jsonObject = JsonParser.parseString(response.replaceAll("[\\[\\]]", "")).getAsJsonObject();
 		JsonObject name = JsonParser.parseString(jsonObject.get("local_names").toString()).getAsJsonObject();
 
 		this.Lon = jsonObject.get("lon").getAsDouble();

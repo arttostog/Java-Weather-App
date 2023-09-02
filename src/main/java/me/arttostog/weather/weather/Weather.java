@@ -20,14 +20,24 @@ public class Weather {
 	public static int Humidity = 0;
 	public static int Pressure = 0;
 	public static int Visibility = 0;
-	public static void Update() throws IOException {
-		GetLonLat gll = new GetLonLat(Config.GetUser().City);
 
-		String response = RequestCreator.Create("https://api.openweathermap.org/data/2.5/weather?lat=" + gll.Lat +"&lon=" + gll.Lon + "&lang=ru&units=metric&appid=" + WeatherApplication.user.Token);
+	public static void Update() throws IOException {
+		GetLonLat gll = new GetLonLat(Config.GetUser().City());
+
+		String url = new StringBuilder("https://api.openweathermap.org/data/2.5/weather?lat=")
+				.append(gll.Lat)
+				.append("&lon=")
+				.append(gll.Lon)
+				.append("&lang=ru&units=metric&appid=")
+				.append(WeatherApplication.user.APIKey())
+				.toString();
+		String response = new RequestCreator(url).Create();
 
 		JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
 		JsonObject main = JsonParser.parseString(jsonObject.get("main").toString()).getAsJsonObject();
-		JsonObject weather = JsonParser.parseString(jsonObject.get("weather").toString().replace("[", "").replace("]", "").split(",\\{")[0]).getAsJsonObject();
+		JsonObject weather = JsonParser.parseString(jsonObject.get("weather").toString().replaceAll("[\\[\\]]", "")
+				.split(",\\{")[0])
+				.getAsJsonObject();
 		JsonObject wind = JsonParser.parseString(jsonObject.get("wind").toString()).getAsJsonObject();
 
 		Name = gll.City;

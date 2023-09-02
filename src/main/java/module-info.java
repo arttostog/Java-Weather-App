@@ -10,6 +10,6 @@ module me.arttostog.weather {
 
 	opens me.arttostog.weather.user to javafx.fxml;
 	exports me.arttostog.weather.user to com.google.gson, javafx.fxml;
-	exports me.arttostog.weather.exception;
-	opens me.arttostog.weather.exception to javafx.fxml;
+	exports me.arttostog.weather.controller;
+	opens me.arttostog.weather.controller to javafx.fxml;
 }

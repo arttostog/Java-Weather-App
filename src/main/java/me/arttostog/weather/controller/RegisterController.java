@@ -1,4 +1,4 @@
-package me.arttostog.weather.user;
+package me.arttostog.weather.controller;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -16,13 +16,14 @@ import javafx.stage.StageStyle;
 import me.arttostog.weather.WeatherApplication;
 import me.arttostog.weather.config.Config;
 import me.arttostog.weather.request.RequestCreator;
+import me.arttostog.weather.user.User;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class Register implements Initializable {
+public class RegisterController implements Initializable {
 	@FXML
 	private Text error;
 	@FXML
@@ -40,7 +41,7 @@ public class Register implements Initializable {
 			WeatherApplication.user = Config.GetUser();
 			return;
 		}
-		Register.Open();
+		RegisterController.Open();
 	}
 
 	private static void Open() throws IOException {
@@ -85,7 +86,12 @@ public class Register implements Initializable {
 	}
 
 	private static boolean Test(String Token, String City) throws IOException {
-		return RequestCreator.Create("https://api.openweathermap.org/geo/1.0/direct?q=" + City + "&limit=1&appid=" + Token).replace("[", "").replace("]", "").isEmpty();
+		String url = new StringBuilder("https://api.openweathermap.org/geo/1.0/direct?q=")
+				.append(City)
+				.append("&limit=1&appid=")
+				.append(Token)
+				.toString();
+		return new RequestCreator(url).Create().replaceAll("[\\[\\]]", "").isEmpty();
 	}
 
 	@Override

@@ -10,9 +10,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.arttostog.weather.config.Config;
-import me.arttostog.weather.exception.NoInternetConnectionException;
-import me.arttostog.weather.request.RequestCreator;
-import me.arttostog.weather.user.Register;
+import me.arttostog.weather.controller.WeatherController;
+import me.arttostog.weather.controller.RegisterController;
 import me.arttostog.weather.user.User;
 import me.arttostog.weather.weather.Weather;
 
@@ -21,29 +20,19 @@ import java.util.Objects;
 
 public class WeatherApplication extends Application {
 	public static User user;
-
 	private static final FXMLLoader fxmlLoaderMain = new FXMLLoader(WeatherApplication.class.getResource("main.fxml"));
 	private static Stage st;
 
 	@Override
-	public void start(Stage stage) throws IOException, NoInternetConnectionException {
+	public void start(Stage stage) throws IOException {
 		st = stage;
 
-		boolean connection = CheckInternetConnection();
-		if (!connection) {
-			throw new NoInternetConnectionException("Нет интернет-соединения!");
-		}
-
-		Register.Login();
+		RegisterController.Login();
 
 		if (Config.isExist()) {
 			Weather.Update();
 			ShowMainStage();
 		}
-	}
-
-	private static boolean CheckInternetConnection() throws IOException {
-		return RequestCreator.CreateTest("https://www.google.com/") == 200;
 	}
 
 	private static void ShowMainStage() throws IOException {

@@ -8,19 +8,16 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class RequestCreator {
-	public static String Create(String url) throws IOException {
-		OkHttpClient client = new OkHttpClient();
-		Request request = new Request.Builder().url(url).build();
-		try (Response response = client.newCall(request).execute()) {
-			return Objects.requireNonNull(response.body()).string();
-		}
+	private final String Url;
+
+	public RequestCreator(String Url) {
+		this.Url = Url;
 	}
 
-	public static int CreateTest(String url) throws IOException {
-		OkHttpClient client = new OkHttpClient();
-		Request request = new Request.Builder().url(url).build();
-		try (Response response = client.newCall(request).execute()) {
-			return response.code();
+	public String Create() throws IOException {
+		Request request = new Request.Builder().url(Url).build();
+		try (Response response = new OkHttpClient().newCall(request).execute()) {
+			return Objects.requireNonNull(response.body()).string();
 		}
 	}
 }

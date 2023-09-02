@@ -1,11 +1,11 @@
-package me.arttostog.weather;
+package me.arttostog.weather.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import me.arttostog.weather.utills.Background;
+import me.arttostog.weather.utils.Utils;
 import me.arttostog.weather.weather.Weather;
 
 import java.net.URL;
@@ -51,7 +51,7 @@ public class WeatherController implements Initializable {
 		Pressure.setText(Weather.Pressure + "");
 		Wind.setText(Weather.Wind + " м/с");
 
-		MainBox.setStyle(Background.GetBackground(Weather.WeatherMain));
+		MainBox.setStyle(Utils.GetBackgroundByWeather(Weather.WeatherMain));
 
 		Font DefaultFontSize = Font.font(18);
 		int WeatherStatusLength = Weather.Status.length();
