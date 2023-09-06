@@ -1,11 +1,11 @@
 <div align="center">
 <img src="/images/icon.png" width="128" height="128">
 
-## Weather
+# Weather
+
+### Информация
 
 </div>
-
-## Информация
 
 Weather - это простое приложение написанное на java для просмотра погоды.
 
@@ -13,11 +13,19 @@ Weather - это простое приложение написанное на j
 
 Внимание! Для работы, приложению нужен ваш API-Ключ от сервиса [OpenWeatherMap](https://home.openweathermap.org/api_keys).
 
-## Установка
+<div align="center">
+
+### Установка
+
+</div>
 
 - Заходите в [Releases](https://github.com/arttostog/Java-Weather-App/releases) и скачиваете от туда последнюю версию.
 - Запускайте исполняемый jar-файл.
 
-## Скриншоты
+<div align="center">
+
+### Скриншоты
 
 <img src="/images/img.png">
+
+</div>
