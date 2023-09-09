@@ -1,8 +1,6 @@
 package me.arttostog.weather.weather;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import me.arttostog.weather.WeatherApplication;
 import me.arttostog.weather.openweathermap.geo_1_0.GeoAPIResponse;
 import me.arttostog.weather.request.RequestCreator;
