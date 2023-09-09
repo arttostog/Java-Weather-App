@@ -6,7 +6,7 @@
 
     <groupId>me.arttostog</groupId>
     <artifactId>Weather</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>Weather</name>
 
     <properties>
@@ -41,6 +41,8 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
+                    <finalName>${project.artifactId}-${project.version}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
                             <mainClass>me.arttostog.weather.WeatherApplication</mainClass>
@@ -69,25 +71,6 @@
                     <target>17</target>
                 </configuration>
             </plugin>
-            <!--<plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
-                <executions>
-                    <execution>
-                        <id>default-cli</id>
-                        <configuration>
-                            <mainClass>me.arttostog.weather/me.arttostog.weather.WeatherApplication</mainClass>
-                            <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
-                            <noManPages>true</noManPages>
-                            <stripDebug>true</stripDebug>
-                            <noHeaderFiles>true</noHeaderFiles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
         </plugins>
     </build>
 </project>
