@@ -5,7 +5,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import me.arttostog.weather.utils.Utils;
 import me.arttostog.weather.weather.Weather;
 
 import java.net.URL;
@@ -51,7 +50,7 @@ public class WeatherController implements Initializable {
 		Pressure.setText(Weather.Pressure + "");
 		Wind.setText(Weather.Wind + " м/с");
 
-		MainBox.setStyle(Utils.GetBackgroundByWeather(Weather.WeatherMain));
+		MainBox.setStyle(GetBackgroundByWeather(Weather.WeatherMain));
 
 		Font DefaultFontSize = Font.font(18);
 		int WeatherStatusLength = Weather.Status.length();
@@ -59,5 +58,15 @@ public class WeatherController implements Initializable {
 			Status.setFont(Font.font(DefaultFontSize.getSize() - (WeatherStatusLength - 18) * 0.90f));
 		}
 		Status.setText(Weather.Status);
+	}
+
+	public static String GetBackgroundByWeather(String weather) {
+		return switch (weather) {
+			case "Clear" -> "-fx-background-color: radial-gradient(center 100% -10% , radius 100% , Yellow, DeepSkyBlue);";
+			case "Clouds" -> "-fx-background-color: linear-gradient(to bottom, CornflowerBlue, LightSkyBlue);";
+			case "Rain", "Drizzle", "Thunderstorm" -> "-fx-background-color: linear-gradient(to bottom, CornflowerBlue, RoyalBlue);";
+			case "Snow" -> "-fx-background-color: LightSkyBlue";
+			default -> "-fx-background-color: LightSteelBlue";
+		};
 	}
 }
