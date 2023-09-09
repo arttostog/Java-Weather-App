@@ -13,13 +13,13 @@ public class Config {
 	private final static File File = new File("user.json");
 	private final static Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
 
-	public static void SaveUser(User user) throws IOException {
+	public static void saveUser(User user) throws IOException {
 		FileWriter fw = new FileWriter(File);
 		gson.toJson(user, fw);
 		fw.flush();
 	}
 
-	public static User GetUser() throws IOException {
+	public static User getUser() throws IOException {
 		return gson.fromJson(new FileReader(File), User.class);
 	}
 

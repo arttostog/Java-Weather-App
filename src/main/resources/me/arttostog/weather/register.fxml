@@ -46,7 +46,7 @@
       <VBox.margin>
          <Insets />
       </VBox.margin></Text>
-    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#Submit" prefHeight="35.0" prefWidth="125.0" style="-fx-background-color: LightGray; -fx-border-color: gray;" text="Отправить" textAlignment="CENTER">
+    <Button fx:id="button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#submit" prefHeight="35.0" prefWidth="125.0" style="-fx-background-color: LightGray; -fx-border-color: gray;" styleClass="Button" text="Отправить" textAlignment="CENTER">
       <font>
          <Font name="Roboto Light" size="14.0" />
       </font>

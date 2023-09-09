@@ -1,18 +1,16 @@
 package me.arttostog.weather.controller;
 
-import javafx.application.Platform;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import me.arttostog.weather.WeatherApplication;
 import me.arttostog.weather.config.Config;
 import me.arttostog.weather.request.RequestCreator;
@@ -20,7 +18,6 @@ import me.arttostog.weather.user.User;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
@@ -32,66 +29,54 @@ public class RegisterController implements Initializable {
 	private TextField city;
 	@FXML
 	private TextField token;
-
-	private static double xOffset = 0;
-	private static double yOffset = 0;
-
-	public static void Login() throws IOException {
-		if (Config.isExist()) {
-			WeatherApplication.user = Config.GetUser();
-			return;
-		}
-		RegisterController.Open();
-	}
-
-	private static void Open() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(WeatherApplication.class.getResource("register.fxml"));
-
-		Scene scene = new Scene(fxmlLoader.load(), Color.TRANSPARENT);
-		Stage stage = new Stage();
-
-		stage.getIcons().add(new Image(Objects.requireNonNull(WeatherApplication.class.getResourceAsStream("icon.png"))));
-		stage.setResizable(false);
-		stage.setTitle("Погода");
-		stage.setScene(scene);
-		stage.initStyle(StageStyle.TRANSPARENT);
-
-		stage.setOnCloseRequest(windowEvent -> Platform.exit());
-		scene.setOnMousePressed(event -> {
-			xOffset = stage.getX() - event.getScreenX();
-			yOffset = stage.getY() - event.getScreenY();
-		});
-		scene.setOnMouseDragged(event -> {
-			stage.setX(event.getScreenX() + xOffset);
-			stage.setY(event.getScreenY() + yOffset);
-		});
-
-		stage.showAndWait();
-	}
+	@FXML
+	public Button button;
 
 	@FXML
-	private void Submit(ActionEvent event) throws IOException {
-		if (name.getText().isEmpty() || city.getText().isEmpty() || token.getText().isEmpty() || name.getText().length() > 25 || Test(token.getText(), city.getText())) {
-			error.setVisible(true);
+	private void submit(ActionEvent event) throws IOException {
+		startButtonPressAnimation();
+
+		if (!checkFields()) {
 			return;
 		}
 
-		User user = new User(name.getText(), city.getText(), token.getText());
-		WeatherApplication.user = user;
-		Config.SaveUser(user);
+		Config.saveUser(WeatherApplication.user = new User(name.getText(), city.getText(), token.getText()));
 
-		Node source = (Node)  event.getSource();
-		Stage stage  = (Stage) source.getScene().getWindow();
+		Stage stage  = (Stage) ((Node)  event.getSource()).getScene().getWindow();
 		stage.hide();
 	}
 
-	private static boolean Test(String Token, String City) throws IOException {
-		String url = new StringBuilder("https://api.openweathermap.org/geo/1.0/direct?q=")
-				.append(City)
-				.append("&limit=1&appid=")
-				.append(Token)
-				.toString();
-		return new RequestCreator(url).Create().replaceAll("[\\[\\]]", "").isEmpty();
+	private void startButtonPressAnimation() {
+		new Thread(() -> {
+			try {
+				button.setStyle("-fx-background-color: gray; -fx-border-color: gray;");
+				Thread.sleep(125);
+				button.setStyle("-fx-background-color: LightGray; -fx-border-color: gray;");
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		}).start();
+	}
+
+	private boolean checkFields() throws IOException {
+		if (name.getText().isEmpty() || city.getText().isEmpty() || token.getText().isEmpty()
+				|| name.getText().length() > 25 || test(token.getText(), city.getText())) {
+			error.setVisible(true);
+			return false;
+		}
+		return true;
+	}
+
+	private boolean test(String Token, String City) throws IOException {
+		return new RequestCreator(
+				new StringBuilder("https://api.openweathermap.org/geo/1.0/direct?q=")
+						.append(City)
+						.append("&limit=1&appid=")
+						.append(Token)
+						.toString())
+				.create()
+				.replaceAll("[\\[\\]]", "")
+				.isEmpty();
 	}
 
 	@Override

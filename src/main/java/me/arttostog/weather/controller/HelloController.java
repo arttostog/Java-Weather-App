@@ -6,8 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import me.arttostog.weather.WeatherApplication;
-import me.arttostog.weather.weather.Weather;
+import me.arttostog.weather.weather.Data;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -24,21 +25,26 @@ public class HelloController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		MainBox.setStyle(WeatherController.GetBackgroundByWeather(Weather.WeatherMain));
-		Hello.setText(GetLabelByTime());
+		try {
+			MainBox.setStyle(MainController.getBackgroundByWeather(new Data().getWeather().weather.main));
+			Hello.setText(getLabelByTime());
+			User.setText(WeatherApplication.user.Name + "!");
+			setFontSize();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-		String name = WeatherApplication.user.Name();
-		int NameLength = name.length();
+	private void setFontSize() {
+		int NameLength = User.getText().length();
 		int MaxNameLength = 17;
 
 		if (NameLength > MaxNameLength) {
 			User.setFont(Font.font(24 - (NameLength - 17)));
 		}
-
-		User.setText(name + "!");
 	}
 
-	private String GetLabelByTime() {
+	private String getLabelByTime() {
 		return switch (Integer.parseInt(dtf.format(LocalTime.now()))) {
 			case 22, 23, 0, 1, 2, 3, 4 -> "Доброй ночи,";
 			case 5, 6, 7, 8, 9, 10, 11, 12 -> "Доброе утро,";

@@ -1,3 +1,13 @@
 package me.arttostog.weather.user;
 
-public record User(String Name, String City, String APIKey) { }
+public class User {
+	public final String Name;
+	public final String City;
+	public final String APIKey;
+
+	public User(String name, String city, String APIKey) {
+		Name = name;
+		City = city;
+		this.APIKey = APIKey;
+	}
+}

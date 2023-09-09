@@ -12,4 +12,6 @@ module me.arttostog.weather {
 	exports me.arttostog.weather.user to com.google.gson, javafx.fxml;
 	exports me.arttostog.weather.controller;
 	opens me.arttostog.weather.controller to javafx.fxml;
+	exports me.arttostog.weather.openweathermap.data_2_5 to com.google.gson;
+	exports me.arttostog.weather.openweathermap.geo_1_0 to com.google.gson;
 }

@@ -14,7 +14,7 @@ public class RequestCreator {
 		this.Url = Url;
 	}
 
-	public String Create() throws IOException {
+	public String create() throws IOException {
 		Request request = new Request.Builder().url(Url).build();
 		try (Response response = new OkHttpClient().newCall(request).execute()) {
 			return Objects.requireNonNull(response.body()).string();
