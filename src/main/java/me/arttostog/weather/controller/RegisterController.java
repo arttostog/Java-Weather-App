@@ -1,5 +1,6 @@
 package me.arttostog.weather.controller;
 
+import com.google.gson.JsonParser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,15 +66,15 @@ public class RegisterController implements Initializable {
 	}
 
 	private boolean test(String Token, String City) throws IOException {
-		return new RequestCreator(
+		String response = new RequestCreator(
 				new StringBuilder("https://api.openweathermap.org/geo/1.0/direct?q=")
 						.append(City)
 						.append("&limit=1&appid=")
 						.append(Token)
 						.toString())
 				.create()
-				.replaceAll("[\\[\\]]", "")
-				.isEmpty();
+				.replaceAll("[\\[\\]]", "");
+		return JsonParser.parseString(response).getAsJsonObject().get("cod") != null;
 	}
 
 	@Override
