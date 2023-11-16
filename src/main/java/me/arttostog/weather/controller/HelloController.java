@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import me.arttostog.weather.WeatherApplication;
+import me.arttostog.weather.user.User;
 import me.arttostog.weather.weather.Data;
 
 import java.io.IOException;
@@ -17,40 +17,38 @@ import java.util.ResourceBundle;
 public class HelloController implements Initializable {
 	private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH");
 	@FXML
-	private VBox MainBox;
+	private VBox mainBox;
 	@FXML
-	private Label Hello;
+	private Label hello;
 	@FXML
-	private Label User;
+	private Label username;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		try {
-			MainBox.setStyle(MainController.getBackgroundByWeather(new Data().getWeather().weather.main));
-			Hello.setText(getLabelByTime());
-			User.setText(WeatherApplication.user.Name + "!");
-			setFontSize();
+			mainBox.setStyle(MainController.getBackgroundByWeather(Data.getData().getWeather().weather.main));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-	}
+		hello.setText(getLabelByTime());
+		username.setText(User.getUser().name + "!");
 
-	private void setFontSize() {
-		int NameLength = User.getText().length();
-		int MaxNameLength = 17;
-
-		if (NameLength > MaxNameLength) {
-			User.setFont(Font.font(24 - (NameLength - 17)));
-		}
+		setFontSize();
 	}
 
 	private String getLabelByTime() {
 		return switch (Integer.parseInt(dtf.format(LocalTime.now()))) {
-			case 22, 23, 0, 1, 2, 3, 4 -> "Доброй ночи,";
-			case 5, 6, 7, 8, 9, 10, 11, 12 -> "Доброе утро,";
+			case 22, 23, 0, 1, 2, 3 -> "Доброй ночи,";
+			case 4, 5, 6, 7, 8, 9, 10, 11, 12 -> "Доброе утро,";
 			case 13, 14, 15, 16, 17, 18 -> "Добрый день,";
 			case 19, 20, 21 -> "Добрый вечер,";
 			default -> "Доброго времени суток,";
 		};
+	}
+
+	private void setFontSize() {
+		int usernameLength = username.getText().length();
+		if (usernameLength >= User.MAX_NAME_LENGTH / 2)
+			username.setFont(Font.font(username.getFont().getSize() - (username.getText().length() / 3f)));
 	}
 }

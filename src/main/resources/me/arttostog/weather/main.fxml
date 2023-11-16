@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="MainBox" prefHeight="400.0" prefWidth="275.0" spacing="20.0" style="-fx-background-color: CornflowerBlue;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.arttostog.weather.controller.MainController">
+<VBox fx:id="mainBox" prefHeight="400.0" prefWidth="275.0" spacing="20.0" style="-fx-background-color: CornflowerBlue;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.arttostog.weather.controller.MainController">
     <Pane prefHeight="200.0" prefWidth="200.0">
-        <VBox>
-            <Text fx:id="Name" fill="WHITE" fontSmoothingType="LCD" text="Москва" textAlignment="CENTER">
+        <VBox prefWidth="250.0">
+            <Text fx:id="city" fill="WHITE" fontSmoothingType="LCD" text="Москва" textAlignment="CENTER">
                 <font>
                     <Font name="Roboto Light" size="20.0" />
                 </font>
@@ -27,7 +27,7 @@
             <effect>
                 <Blend />
             </effect>
-            <Text fx:id="Temp" fill="WHITE" fontSmoothingType="LCD" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="-10°">
+            <Text fx:id="temp" fill="WHITE" fontSmoothingType="LCD" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="-10°">
                 <font>
                     <Font name="Roboto Light" size="80.0" />
                 </font>
@@ -43,14 +43,14 @@
             <effect>
                 <Blend />
             </effect>
-            <Text fx:id="TempFeelsLike" fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Ощущается как: -10°">
+            <Text fx:id="tempFeelsLike" fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Ощущается как: -10°">
                 <font>
                     <Font name="Roboto Light" size="12.0" />
                 </font>
             </Text>
         </VBox>
         <VBox alignment="BOTTOM_RIGHT" layoutX="150.0" layoutY="110.0" minWidth="225.0" pickOnBounds="false" prefHeight="17.0" prefWidth="92.0" rotate="-90.0">
-            <Text fx:id="Status" boundsType="VISUAL" fill="WHITE" text="Ясно" textAlignment="CENTER">
+            <Text fx:id="status" boundsType="VISUAL" fill="WHITE" text="Ясно" textAlignment="CENTER">
                 <font>
                     <Font name="Roboto Light" size="18.0" />
                 </font>
@@ -74,7 +74,7 @@
             <effect>
                 <Blend />
             </effect>
-            <Text fx:id="MinTemp" fill="WHITE" fontSmoothingType="LCD" text="-10°" textAlignment="CENTER">
+            <Text fx:id="minTemp" fill="WHITE" fontSmoothingType="LCD" text="-10°" textAlignment="CENTER">
                 <font>
                     <Font name="Roboto Light" size="18.0" />
                 </font>
@@ -86,7 +86,7 @@
             </Text>
         </VBox>
         <VBox alignment="CENTER" layoutX="91.66666666666667" layoutY="20.0" prefHeight="60.0" prefWidth="91.66666666666667" style="-fx-border-color: transparent rgba(190,190,190,0.3); -fx-border-width: 2; -fx-border-insets: 1;">
-            <Text fx:id="Humidity" fill="WHITE" fontSmoothingType="LCD" text="50%" textAlignment="CENTER">
+            <Text fx:id="humidity" fill="WHITE" fontSmoothingType="LCD" text="50%" textAlignment="CENTER">
                 <font>
                     <Font name="Roboto Light" size="18.0" />
                 </font>
@@ -104,7 +104,7 @@
             <effect>
                 <Blend />
             </effect>
-            <Text fx:id="MaxTemp" fill="WHITE" fontSmoothingType="LCD" text="-10°" textAlignment="CENTER">
+            <Text fx:id="maxTemp" fill="WHITE" fontSmoothingType="LCD" text="-10°" textAlignment="CENTER">
                 <font>
                     <Font name="Roboto Light" size="18.0" />
                 </font>
@@ -124,7 +124,7 @@
             <effect>
                 <Blend />
             </effect>
-            <Text fx:id="Wind" fill="WHITE" fontSmoothingType="LCD" text="10 м/с" textAlignment="CENTER">
+            <Text fx:id="wind" fill="WHITE" fontSmoothingType="LCD" text="10 м/с" textAlignment="CENTER">
                 <font>
                     <Font name="Roboto Light" size="18.0" />
                 </font>
@@ -139,7 +139,7 @@
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
-            <Text fx:id="Visibility" fill="WHITE" fontSmoothingType="LCD" text="10 км" textAlignment="CENTER">
+            <Text fx:id="visibility" fill="WHITE" fontSmoothingType="LCD" text="10 км" textAlignment="CENTER">
                 <font>
                     <Font name="Roboto Light" size="18.0" />
                 </font>
@@ -154,7 +154,7 @@
          </effect>
         </VBox>
         <VBox alignment="CENTER" layoutX="183.3333333333333" layoutY="7.0" prefHeight="100.0" prefWidth="91.66666666666667">
-            <Text fx:id="Pressure" fill="WHITE" fontSmoothingType="LCD" text="1000" textAlignment="CENTER">
+            <Text fx:id="pressure" fill="WHITE" fontSmoothingType="LCD" text="1000" textAlignment="CENTER">
                 <font>
                     <Font name="Roboto Light" size="18.0" />
                 </font>

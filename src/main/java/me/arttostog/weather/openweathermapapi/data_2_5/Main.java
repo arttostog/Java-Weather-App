@@ -1,4 +1,4 @@
-package me.arttostog.weather.openweathermap.data_2_5;
+package me.arttostog.weather.openweathermapapi.data_2_5;
 
 public class Main {
 	public float temp;

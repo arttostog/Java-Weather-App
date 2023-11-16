@@ -1,49 +1,50 @@
 package me.arttostog.weather.opener;
 
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import me.arttostog.weather.WeatherApplication;
 import me.arttostog.weather.config.Config;
+import me.arttostog.weather.stage.RegisterStageSettings;
+import me.arttostog.weather.stage.StageSettings;
+import me.arttostog.weather.user.User;
 
 import java.io.IOException;
-import java.util.Objects;
 
-public class RegisterOpener {
-	private static double xOffset = 0;
-	private static double yOffset = 0;
+public class RegisterOpener extends Opener {
+	private static RegisterOpener opener;
+	private double xOffset = 0;
+	private double yOffset = 0;
 
-	public static void login() throws IOException {
-		if (Config.isExist()) {
-			WeatherApplication.user = Config.getUser();
-			return;
-		}
-		open();
+	RegisterOpener() {
+		super(new Stage(), new FXMLLoader(WeatherApplication.class.getResource("register.fxml")));
 	}
 
-	private static void open() throws IOException {
-		Stage stage = getStage();
+	@Override
+	public void open() throws IOException {
+		if (setUser()) return;
+
+		StageSettings settings = new RegisterStageSettings();
+		settings.setToBase(stage);
+		settings.set(stage);
+
+		stage.setScene(getScene());
 		stage.showAndWait();
 	}
 
-	private static Stage getStage() throws IOException {
-		Stage stage = new Stage();
-
-		stage.getIcons().add(new Image(Objects.requireNonNull(WeatherApplication.class.getResourceAsStream("icon.png"))));
-		stage.setResizable(false);
-		stage.setTitle("Погода");
-		stage.initStyle(StageStyle.TRANSPARENT);
-		stage.setOnCloseRequest(windowEvent -> Platform.exit());
-		stage.setScene(getScene(stage));
-		return stage;
+	public boolean setUser() throws IOException {
+		Config config = Config.getConfig();
+		if (config.isExist()) {
+			User.setUser(config.getUser());
+			return true;
+		}
+		return false;
 	}
 
-	private static Scene getScene(Stage stage) throws IOException {
-		Scene scene = new Scene(new FXMLLoader(WeatherApplication.class.getResource("register.fxml")).load(), Color.TRANSPARENT);
+	@Override
+	Scene getScene() throws IOException {
+		Scene scene = new Scene(loader.load(), Color.TRANSPARENT);
 
 		scene.setOnMousePressed(event -> {
 			xOffset = stage.getX() - event.getScreenX();
@@ -55,5 +56,13 @@ public class RegisterOpener {
 		});
 
 		return scene;
+	}
+
+	public void hideRegisterStage() {
+		stage.hide();
+	}
+
+	public static RegisterOpener getOpener() {
+		return opener == null ? (opener = new RegisterOpener()) : opener;
 	}
 }

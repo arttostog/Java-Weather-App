@@ -5,76 +5,65 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import me.arttostog.weather.WeatherApplication;
 import me.arttostog.weather.weather.Data;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 	@FXML
-	private Text Temp;
+	private Text temp;
 	@FXML
-	private Text MaxTemp;
+	private Text maxTemp;
 	@FXML
-	private Text MinTemp;
+	private Text minTemp;
 	@FXML
-	private Text TempFeelsLike;
+	private Text tempFeelsLike;
 	@FXML
-	private Text Name;
+	private Text city;
 	@FXML
-	private Text Status;
+	private Text status;
+	private double defaultStatusFontSize;
 	@FXML
-	private Text Humidity;
+	private Text humidity;
 	@FXML
-	private Text Visibility;
+	private Text visibility;
 	@FXML
-	private Text Pressure;
+	private Text pressure;
 	@FXML
-	private Text Wind;
+	private Text wind;
 	@FXML
-	private VBox MainBox;
+	private VBox mainBox;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		defaultStatusFontSize = status.getFont().getSize();
 		try {
-			this.update();
+			this.updateScene();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void update() throws IOException {
-		updateScene(new Data());
-		setStatusFontSize();
-	}
-
-	private void updateScene(Data data) {
-		Temp.setText(Math.round(data.getWeather().main.temp) + "°");
-		MaxTemp.setText(Math.round(data.getWeather().main.temp_max) + "°");
-		MinTemp.setText(Math.round(data.getWeather().main.temp_min) + "°");
-		TempFeelsLike.setText("Ощущается как: " + Math.round(data.getWeather().main.feels_like) + "°");
-		Name.setText(WeatherApplication.user.City);
-		Status.setText(getStatus(data));
-		Humidity.setText(data.getWeather().main.humidity+ "%");
-		Visibility.setText(data.getWeather().visibility + " км");
-		Pressure.setText(data.getWeather().main.pressure + "");
-		Wind.setText(Math.round(data.getWeather().wind.speed) + " м/с");
-		MainBox.setStyle(getBackgroundByWeather(data.getWeather().weather.main));
-	}
-
-	private String getStatus(Data data) {
-		String str = data.getWeather().weather.description;
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
-
-	private void setStatusFontSize() {
-		Font DefaultFontSize = Font.font(18);
-		int WeatherStatusLength = Status.getText().length();
-		if (WeatherStatusLength > 18) {
-			Status.setFont(Font.font(DefaultFontSize.getSize() - (WeatherStatusLength - 18) * 0.90f));
+	public void updateScene() throws IOException {
+		List<Text> textList = Arrays.asList(
+				temp, maxTemp, minTemp, tempFeelsLike, city, status, humidity, visibility, pressure, wind
+		);
+		List<String> dataAsList = Data.getData().getWeatherAsList();
+		for (int i = 0; i < textList.size(); i++) {
+			textList.get(i).setText(dataAsList.get(i));
 		}
+		mainBox.setStyle(getBackgroundByWeather(dataAsList.get(dataAsList.size() - 1)));
+		updateStatusFontSize();
+	}
+
+	private void updateStatusFontSize() {
+		int weatherStatusLength = status.getText().length();
+		if (weatherStatusLength > defaultStatusFontSize)
+			status.setFont(Font.font(defaultStatusFontSize - (weatherStatusLength - defaultStatusFontSize) * 0.9f));
 	}
 
 	public static String getBackgroundByWeather(String weather) {

@@ -10,20 +10,25 @@ import java.io.FileWriter;
 import java.io.File;
 
 public class Config {
-	private final static File File = new File("user.json");
-	private final static Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
+	private static Config config;
+	private final File file = new File("user.json");
+	private final Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
 
-	public static void saveUser(User user) throws IOException {
-		FileWriter fw = new FileWriter(File);
+	public void saveUser(User user) throws IOException {
+		FileWriter fw = new FileWriter(file);
 		gson.toJson(user, fw);
 		fw.flush();
 	}
 
-	public static User getUser() throws IOException {
-		return gson.fromJson(new FileReader(File), User.class);
+	public User getUser() throws IOException {
+		return gson.fromJson(new FileReader(file), User.class);
 	}
 
-	public static boolean isExist() {
-		return File.exists();
+	public boolean isExist() {
+		return file.exists();
+	}
+
+	public static Config getConfig() {
+		return config == null ? (config = new Config()) : config;
 	}
 }

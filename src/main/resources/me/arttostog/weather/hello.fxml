@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="MainBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="275.0" style="-fx-background-color: radial-gradient(center 100% -10% , radius 100% , Yellow, DeepSkyBlue);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.arttostog.weather.controller.HelloController">
-   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="240.0">
-      <Label fx:id="Hello" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Доброе утро," textFill="WHITE">
+<VBox fx:id="mainBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="275.0" style="-fx-background-color: radial-gradient(center 100% -10% , radius 100% , Yellow, DeepSkyBlue);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.arttostog.weather.controller.HelloController">
+   <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="240.0">
+      <Label fx:id="hello" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Доброе утро," textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="24.0" />
          </font>
@@ -15,7 +15,7 @@
             <Blend />
          </effect>
       </Label>
-      <Label fx:id="User" alignment="TOP_CENTER" text="Пользователь!" textFill="WHITE">
+      <Label fx:id="username" alignment="CENTER" text="Пользователь!" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="24.0" />
          </font>

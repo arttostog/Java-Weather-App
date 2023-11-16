@@ -6,7 +6,7 @@
 
     <groupId>me.arttostog</groupId>
     <artifactId>Weather</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <name>Weather</name>
 
     <properties>
@@ -17,12 +17,12 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>19.0.2.1</version>
+            <version>22-ea+16</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>19.0.2.1</version>
+            <version>22-ea+16</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>4.11.0</version>
+            <version>4.12.0</version>
         </dependency>
     </dependencies>
 
