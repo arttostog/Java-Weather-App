@@ -11,9 +11,9 @@ import java.io.IOException;
 public class WeatherApplication extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
-		RegisterOpener.getOpener().open();
+		RegisterOpener.getInstance().open();
 		if (!Config.getConfig().isExist()) return;
-		HelloOpener.getOpener(stage).open();
+		new HelloOpener(stage).open();
 	}
 
 	public static void main(String[] args) {

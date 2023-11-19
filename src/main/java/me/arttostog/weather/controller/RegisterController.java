@@ -6,10 +6,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import me.arttostog.weather.animation.RegisterControllerButtonGuiAnimation;
+import me.arttostog.weather.request.TestRequest;
+import me.arttostog.weather.timeline.ButtonAnimationTimeLine;
 import me.arttostog.weather.config.Config;
 import me.arttostog.weather.opener.RegisterOpener;
-import me.arttostog.weather.request.ApiRequestCreator;
+import me.arttostog.weather.request.Request;
 import me.arttostog.weather.user.User;
 
 import java.io.IOException;
@@ -29,32 +30,26 @@ public class RegisterController implements Initializable {
 	public Button button;
 	@FXML
 	private void submit() {
-		new RegisterControllerButtonGuiAnimation(button).startAnimation();
+		new ButtonAnimationTimeLine(button).startTimeLine();
 
 		try {
 			if (!checkFields()) return;
 			Config.getConfig().saveUser(new User(name.getText(), city.getText(), token.getText()));
-			RegisterOpener.getOpener().setUser();
+			RegisterOpener.getInstance().setUser();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 
-		RegisterOpener.getOpener().hideRegisterStage();
+		RegisterOpener.getInstance().hideRegisterStage();
 	}
 
 	private boolean checkFields() throws IOException {
 		if (name.getText().isEmpty() || city.getText().isEmpty() || token.getText().isEmpty()
-				|| name.getText().length() > User.MAX_NAME_LENGTH || test(token.getText(), city.getText())) {
+				|| name.getText().length() > User.MAX_NAME_LENGTH || new TestRequest(city.getText(), token.getText()).getResponse()) {
 			error.setVisible(true);
 			return false;
 		}
 		return true;
-	}
-
-	private boolean test(String Token, String City) throws IOException {
-		return JsonParser.parseString(new ApiRequestCreator(
-				"https://api.openweathermap.org/geo/1.0/direct?q=" + City + "&limit=1&appid=" + Token
-		).create()).getAsJsonObject().get("cod") != null;
 	}
 
 	@Override

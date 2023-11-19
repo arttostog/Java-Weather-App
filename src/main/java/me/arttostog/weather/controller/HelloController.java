@@ -26,7 +26,7 @@ public class HelloController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		try {
-			mainBox.setStyle(MainController.getBackgroundByWeather(Data.getData().getWeather().weather.main));
+			mainBox.setStyle(MainController.getBackgroundByWeather());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

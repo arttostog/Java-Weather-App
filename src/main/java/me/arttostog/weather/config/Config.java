@@ -12,7 +12,7 @@ import java.io.File;
 public class Config {
 	private static Config config;
 	private final File file = new File("user.json");
-	private final Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
+	private final Gson gson = new Gson();
 
 	public void saveUser(User user) throws IOException {
 		FileWriter fw = new FileWriter(file);

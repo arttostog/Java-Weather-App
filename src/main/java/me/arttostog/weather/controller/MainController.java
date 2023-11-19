@@ -56,18 +56,18 @@ public class MainController implements Initializable {
 		for (int i = 0; i < textList.size(); i++) {
 			textList.get(i).setText(dataAsList.get(i));
 		}
-		mainBox.setStyle(getBackgroundByWeather(dataAsList.get(dataAsList.size() - 1)));
+		mainBox.setStyle(getBackgroundByWeather());
 		updateStatusFontSize();
 	}
 
 	private void updateStatusFontSize() {
 		int weatherStatusLength = status.getText().length();
-		if (weatherStatusLength > defaultStatusFontSize)
-			status.setFont(Font.font(defaultStatusFontSize - (weatherStatusLength - defaultStatusFontSize) * 0.9f));
+		if (weatherStatusLength > defaultStatusFontSize / 2)
+			status.setFont(Font.font(defaultStatusFontSize - weatherStatusLength / 10f));
 	}
 
-	public static String getBackgroundByWeather(String weather) {
-		return switch (weather) {
+	public static String getBackgroundByWeather() throws IOException {
+		return switch (Data.getData().getWeatherName()) {
 			case "Clear" -> "-fx-background-color: radial-gradient(center 100% -10% , radius 100% , Yellow, DeepSkyBlue);";
 			case "Clouds" -> "-fx-background-color: linear-gradient(to bottom, CornflowerBlue, LightSkyBlue);";
 			case "Rain", "Drizzle", "Thunderstorm" -> "-fx-background-color: linear-gradient(to bottom, CornflowerBlue, RoyalBlue);";

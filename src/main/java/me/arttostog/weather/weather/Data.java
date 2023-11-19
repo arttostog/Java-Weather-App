@@ -1,8 +1,7 @@
 package me.arttostog.weather.weather;
 
-import com.google.gson.Gson;
 import me.arttostog.weather.openweathermapapi.data_2_5.DataAPIResponse;
-import me.arttostog.weather.request.ApiRequestCreator;
+import me.arttostog.weather.request.DataRequest;
 import me.arttostog.weather.user.User;
 
 import java.io.IOException;
@@ -11,26 +10,20 @@ import java.util.List;
 
 public class Data {
 	private static Data data;
-	private final Gson gson = new Gson();
+	private final DataRequest dataRequest;
 	private DataAPIResponse weather;
 
 	private Data() throws IOException {
+		dataRequest = new DataRequest(new Geo());
 		updateData();
 	}
 
 	public void updateData() throws IOException {
-		weather = gson.fromJson(getResponse(new Geo(User.getUser().city)), DataAPIResponse.class);
+		weather = dataRequest.getResponse();
 	}
 
-	private String getResponse(Geo geo) throws IOException {
-		return new ApiRequestCreator(
-				"https://api.openweathermap.org/data/2.5/weather?lat=" + geo.getLat() +
-						"&lon=" + geo.getLon() + "&lang=ru&units=metric&appid=" + User.getUser().apiKey
-		).create();
-	}
-
-	public DataAPIResponse getWeather() {
-		return weather;
+	public String getWeatherName() {
+		return weather.weather.main;
 	}
 
 	public List<String> getWeatherAsList() {
@@ -44,8 +37,7 @@ public class Data {
 				weather.main.humidity + "%",
 				weather.visibility + " км",
 				String.valueOf(weather.main.pressure),
-				round(weather.wind.speed) + "м/с",
-				weather.weather.main
+				round(weather.wind.speed) + "м/с"
 		);
 	}
 

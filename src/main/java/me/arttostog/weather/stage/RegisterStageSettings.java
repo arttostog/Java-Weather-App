@@ -5,8 +5,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class RegisterStageSettings extends StageSettings {
+	public RegisterStageSettings(Stage stage) {
+		super(stage);
+	}
+
 	@Override
-	public void set(Stage stage) {
+	public void set() {
 		stage.initStyle(StageStyle.TRANSPARENT);
 		stage.setOnCloseRequest(windowEvent -> {
 			stage.hide();

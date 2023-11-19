@@ -17,17 +17,18 @@ public class RegisterOpener extends Opener {
 	private double xOffset = 0;
 	private double yOffset = 0;
 
-	RegisterOpener() {
-		super(new Stage(), new FXMLLoader(WeatherApplication.class.getResource("register.fxml")));
+	RegisterOpener(Stage stage) {
+		super(stage, new RegisterStageSettings(stage), true,
+				new FXMLLoader(WeatherApplication.class.getResource("register.fxml")));
 	}
 
 	@Override
 	public void open() throws IOException {
 		if (setUser()) return;
 
-		StageSettings settings = new RegisterStageSettings();
-		settings.setToBase(stage);
-		settings.set(stage);
+		StageSettings settings = new RegisterStageSettings(stage);
+		settings.setToDefault();
+		settings.set();
 
 		stage.setScene(getScene());
 		stage.showAndWait();
@@ -62,7 +63,7 @@ public class RegisterOpener extends Opener {
 		stage.hide();
 	}
 
-	public static RegisterOpener getOpener() {
-		return opener == null ? (opener = new RegisterOpener()) : opener;
+	public static RegisterOpener getInstance() {
+		return opener == null ? (opener = new RegisterOpener(new Stage())) : opener;
 	}
 }

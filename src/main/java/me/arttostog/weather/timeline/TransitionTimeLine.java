@@ -1,4 +1,4 @@
-package me.arttostog.weather.animation;
+package me.arttostog.weather.timeline;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -8,14 +8,19 @@ import me.arttostog.weather.opener.MainOpener;
 
 import java.io.IOException;
 
-public class HelloOpenerTransitionGuiAnimation extends GuiAnimation {
-	public HelloOpenerTransitionGuiAnimation(Stage stage) {
+public class TransitionTimeLine extends TimeLine {
+	public TransitionTimeLine(Stage stage) {
 		super(new Timeline(new KeyFrame(Duration.seconds(5), event -> {
 			try {
-				MainOpener.getOpener(stage).open();
+				new MainOpener(stage).open();
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		})));
+	}
+
+	@Override
+	public void startTimeLine() {
+		timeline.play();
 	}
 }
