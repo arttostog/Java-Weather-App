@@ -1,16 +1,14 @@
 package me.arttostog.weather.controller;
 
-import com.google.gson.JsonParser;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import me.arttostog.weather.request.TestRequest;
+import me.arttostog.weather.request.ValidateDataRequest;
 import me.arttostog.weather.timeline.ButtonAnimationTimeLine;
 import me.arttostog.weather.config.Config;
 import me.arttostog.weather.opener.RegisterOpener;
-import me.arttostog.weather.request.Request;
 import me.arttostog.weather.user.User;
 
 import java.io.IOException;
@@ -19,22 +17,22 @@ import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
 	@FXML
-	private Text error;
+	private Text errorText;
 	@FXML
-	private TextField name;
+	private TextField nameTextField;
 	@FXML
-	private TextField city;
+	private TextField cityTextField;
 	@FXML
-	private TextField token;
+	private TextField tokenTextField;
 	@FXML
-	public Button button;
+	public Button submitButton;
 	@FXML
 	private void submit() {
-		new ButtonAnimationTimeLine(button).startTimeLine();
+		new ButtonAnimationTimeLine(submitButton).startTimeLine();
 
 		try {
 			if (!checkFields()) return;
-			Config.getConfig().saveUser(new User(name.getText(), city.getText(), token.getText()));
+			Config.getConfig().saveUser(new User(nameTextField.getText(), cityTextField.getText(), tokenTextField.getText()));
 			RegisterOpener.getInstance().setUser();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -44,9 +42,9 @@ public class RegisterController implements Initializable {
 	}
 
 	private boolean checkFields() throws IOException {
-		if (name.getText().isEmpty() || city.getText().isEmpty() || token.getText().isEmpty()
-				|| name.getText().length() > User.MAX_NAME_LENGTH || new TestRequest(city.getText(), token.getText()).getResponse()) {
-			error.setVisible(true);
+		if (nameTextField.getText().isEmpty() || cityTextField.getText().isEmpty() || tokenTextField.getText().isEmpty()
+				|| nameTextField.getText().length() > User.MAX_NAME_LENGTH || new ValidateDataRequest(cityTextField.getText(), tokenTextField.getText()).getResponse()) {
+			errorText.setVisible(true);
 			return false;
 		}
 		return true;
@@ -54,7 +52,7 @@ public class RegisterController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		name.setPromptText("Максимум " + User.MAX_NAME_LENGTH + " символов");
-		error.setVisible(false);
+		nameTextField.setPromptText("Максимум " + User.MAX_NAME_LENGTH + " символов");
+		errorText.setVisible(false);
 	}
 }

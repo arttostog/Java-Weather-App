@@ -1,13 +1,12 @@
 package me.arttostog.weather.config;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import me.arttostog.weather.user.User;
 
-import java.io.IOException;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.File;
+import java.io.IOException;
 
 public class Config {
 	private static Config config;
@@ -17,7 +16,7 @@ public class Config {
 	public void saveUser(User user) throws IOException {
 		FileWriter fw = new FileWriter(file);
 		gson.toJson(user, fw);
-		fw.flush();
+		fw.close();
 	}
 
 	public User getUser() throws IOException {

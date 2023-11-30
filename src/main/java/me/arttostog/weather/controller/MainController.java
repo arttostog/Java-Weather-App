@@ -15,32 +15,32 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 	@FXML
-	private Text temp;
+	private Text tempText;
 	@FXML
-	private Text maxTemp;
+	private Text maxTempText;
 	@FXML
-	private Text minTemp;
+	private Text minTempText;
 	@FXML
-	private Text tempFeelsLike;
+	private Text tempFeelsLikeText;
 	@FXML
-	private Text city;
+	private Text cityText;
 	@FXML
-	private Text status;
+	private Text statusText;
 	private double defaultStatusFontSize;
 	@FXML
-	private Text humidity;
+	private Text humidityText;
 	@FXML
-	private Text visibility;
+	private Text visibilityText;
 	@FXML
-	private Text pressure;
+	private Text pressureText;
 	@FXML
-	private Text wind;
+	private Text windText;
 	@FXML
 	private VBox mainBox;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		defaultStatusFontSize = status.getFont().getSize();
+		defaultStatusFontSize = statusText.getFont().getSize();
 		try {
 			this.updateScene();
 		} catch (IOException e) {
@@ -50,29 +50,21 @@ public class MainController implements Initializable {
 
 	public void updateScene() throws IOException {
 		List<Text> textList = Arrays.asList(
-				temp, maxTemp, minTemp, tempFeelsLike, city, status, humidity, visibility, pressure, wind
+				tempText, maxTempText, minTempText, tempFeelsLikeText, cityText, statusText, humidityText, visibilityText, pressureText, windText
 		);
-		List<String> dataAsList = Data.getData().getWeatherAsList();
+		Data data = Data.getData();
+		List<String> dataAsList = data.getWeatherAsList();
+
 		for (int i = 0; i < textList.size(); i++) {
 			textList.get(i).setText(dataAsList.get(i));
 		}
-		mainBox.setStyle(getBackgroundByWeather());
+		mainBox.setStyle(data.getBackgroundByWeather());
 		updateStatusFontSize();
 	}
 
 	private void updateStatusFontSize() {
-		int weatherStatusLength = status.getText().length();
+		int weatherStatusLength = statusText.getText().length();
 		if (weatherStatusLength > defaultStatusFontSize / 2)
-			status.setFont(Font.font(defaultStatusFontSize - weatherStatusLength / 10f));
-	}
-
-	public static String getBackgroundByWeather() throws IOException {
-		return switch (Data.getData().getWeatherName()) {
-			case "Clear" -> "-fx-background-color: radial-gradient(center 100% -10% , radius 100% , Yellow, DeepSkyBlue);";
-			case "Clouds" -> "-fx-background-color: linear-gradient(to bottom, CornflowerBlue, LightSkyBlue);";
-			case "Rain", "Drizzle", "Thunderstorm" -> "-fx-background-color: linear-gradient(to bottom, CornflowerBlue, RoyalBlue);";
-			case "Snow" -> "-fx-background-color: LightSkyBlue";
-			default -> "-fx-background-color: LightSteelBlue";
-		};
+			statusText.setFont(Font.font(defaultStatusFontSize - weatherStatusLength / 10f));
 	}
 }

@@ -22,10 +22,6 @@ public class Data {
 		weather = dataRequest.getResponse();
 	}
 
-	public String getWeatherName() {
-		return weather.weather.main;
-	}
-
 	public List<String> getWeatherAsList() {
 		return Arrays.asList(
 				round(weather.main.temp) + "°",
@@ -37,7 +33,7 @@ public class Data {
 				weather.main.humidity + "%",
 				weather.visibility + " км",
 				String.valueOf(weather.main.pressure),
-				round(weather.wind.speed) + "м/с"
+				round(weather.wind.speed) + " м/с"
 		);
 	}
 
@@ -48,6 +44,16 @@ public class Data {
 	private String getStatus() {
 		String str = weather.weather.description;
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
+	}
+
+	public String getBackgroundByWeather() {
+		return switch (weather.weather.main) {
+			case "Clear" -> "-fx-background-color: radial-gradient(center 100% -10% , radius 100% , Yellow, DeepSkyBlue);";
+			case "Clouds" -> "-fx-background-color: linear-gradient(to bottom, CornflowerBlue, LightSkyBlue);";
+			case "Rain", "Drizzle", "Thunderstorm" -> "-fx-background-color: linear-gradient(to bottom, CornflowerBlue, RoyalBlue);";
+			case "Snow" -> "-fx-background-color: LightSkyBlue";
+			default -> "-fx-background-color: LightSteelBlue";
+		};
 	}
 
 	public static Data getData() throws IOException {
