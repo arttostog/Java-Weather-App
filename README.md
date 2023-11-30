@@ -7,7 +7,9 @@
 
 </div>
 
-Weather - это простое приложение написанное на java для просмотра погоды.
+Weather - это приложение для просмотра погоды.
+
+Весь код приложения написан на [Java 17](https://www.oracle.com/java/technologies/downloads/#java17), что гарантирует возможность запуска на Windows, Linux или MacOS.
 
 Приложение построено на фреймворке [JavaFX](https://openjfx.io/) и сервисе [OpenWeatherMap](https://openweathermap.org/).
 
@@ -19,7 +21,7 @@ Weather - это простое приложение написанное на j
 
 </div>
 
-- Заходите в [Releases](https://github.com/arttostog/Java-Weather-App/releases) и скачиваете от туда последнюю версию.
+- Заходите в [Releases](https://github.com/arttostog/Java-Weather-App/releases) и скачиваете последнюю версию.
 - Запускайте исполняемый jar-файл.
 
 <div align="center">
